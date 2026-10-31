@@ -11,8 +11,8 @@ from telegram.constants import ParseMode
 from telegram.error import BadRequest
 from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
 
-from . import charts, core, fmt
-from .store import Store
+import charts, core, fmt
+from store import Store
 
 log = logging.getLogger("studybot")
 HTML = ParseMode.HTML

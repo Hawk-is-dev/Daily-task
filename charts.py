@@ -7,7 +7,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-from . import core  # noqa: E402
+import core  # noqa: E402
 
 BG, GRID, TXT, UP, DOWN = "#131722", "#2a2e39", "#d1d4dc", "#26a69a", "#ef5350"
 

@@ -32,7 +32,7 @@ def _sec(s):
 
 
 def _load():
-    path = os.path.join(os.path.dirname(__file__), "..", "data", "lectures.txt")
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lectures.txt")
     lecs, subj, chap, n, punch, gal, idx = [], None, None, 0, 0, 0, 0
     for raw in open(path, encoding="utf-8"):
         line = raw.strip()

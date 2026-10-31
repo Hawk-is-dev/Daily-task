@@ -3,8 +3,8 @@ import html
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-from . import core
-from .core import LEC, SEMOJI, SNAME, SUBJECTS, fdur
+import core
+from core import LEC, SEMOJI, SNAME, SUBJECTS, fdur
 
 _SC = dict(zip("abcdefghijklmnoprstuvwyz", "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘʀsᴛᴜᴠᴡʏᴢ"))
 _SC_T = str.maketrans(_SC)

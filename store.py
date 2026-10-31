@@ -2,7 +2,7 @@
 import json
 import os
 
-from . import core
+import core
 
 
 class Store:
