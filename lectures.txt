@@ -1,0 +1,324 @@
+// @X = subject code | #Chapter | plain line = "Chapter NN : title" | ~ = NCERT Punch | ^ = Shourya's Galaxy | = = full custom name
+// last "|" separates duration (H:MM:SS)
+@M
+#Matrices
+Introduction To Matrices · Types Of Matrices|1:26:20
+Types Of Matrices · Equality Of Matrices|1:38:12
+Operations On Matrices|1:46:12
+Transpose Of Matrix|1:50:16
+Symmetric And Skew Symmetric Matrix|1:45:36
+Inverse Of Matrix and IMP Questions|1:47:08
+Most IMP Questions (Part - 01)|1:58:08
+Most IMP Questions (Part - 02)|1:47:08
+~Matrices (Part - 01)|1:44:48
+~Matrices (Part - 02)|0:44:24
+#Determinants
+Introduction To Determinants|1:37:16
+Minors · Cofactors And Adjoint Of Matrix|1:51:16
+Adjoint and Inverse Of Matrix|1:49:28
+Consistency Of Linear Equations|1:44:52
+Solving System Of Linear Equations|1:53:16
+Practice And Doubts|1:05:24
+Extra Questions and Doubt Solving|2:02:24
+~Determinants (Part - 01)|2:02:46
+~Determinants (Part - 02)|1:42:55
+#Relations and Functions
+Relations And Its Domain And Range|1:24:20
+Types Of Relation (Part - 01)|1:50:04
+Types Of Relation (Part - 02)|1:43:08
+Types Of Relation (Part - 03)|1:58:04
+Types Of Relation (Part - 04)|1:58:08
+Functions And Its Domain And Range|1:43:04
+Types Of Functions (Part - 01)|1:49:44
+Types Of Functions (Part - 02)|1:41:52
+Questions on Functions|1:42:00
+Question Practice|1:29:19
+~Relations and Functions (Part - 01)|2:38:35
+~Relations and Functions (Part - 02)|1:52:01
+#Inverse Trigonometric Functions
+Basic Trigonometry|1:48:44
+Introduction To ITF|1:38:40
+Graph of ITF and Some Basic Formulas|1:40:44
+=Doubt Session 01 : Doubts and Queries|1:16:56
+Properties Of ITF|1:38:32
+Important Questions (Part - 01)|1:49:52
+Important Questions (Part - 02)|1:57:48
+~Inverse Trigonometric Functions (Part - 01)|1:00:43
+~Inverse Trigonometric Functions (Part - 02)|0:57:55
+#Continuity and Differentiability
+Basic Calculus and Limits · Continuity (Part - 01)|1:51:20
+Continuity (Part - 02)|1:33:32
+Continuity (Part - 03)|1:49:16
+Differentiability|1:03:08
+Basic Differentiability|1:55:20
+Methods Of Differentiation (Part - 01)|1:57:16
+Methods Of Differentiation (Part - 02)|1:45:48
+Methods Of Differentiation · Logarithmic Differentiation|1:48:16
+Logarithmic Differentiation (Part - 02)|1:39:12
+Parametric And Second Order Derivatives|1:44:20
+Second Order Derivatives|1:54:32
+Practice And Doubts Session|1:48:04
+~Continuity and Differentiability (Part - 01)|1:21:14
+~Continuity and Differentiability (Part - 02)|1:56:16
+#Application of Derivatives
+Rate Of Change Of Quantities|1:21:00
+Rate Of Change Of Quantities (Part - 02)|1:57:48
+Increasing - Decreasing Functions|1:51:00
+Increasing - Decreasing Functions (Part - 02)|1:59:32
+Maxima And Minima|1:45:00
+Maxima And Minima (Part - 02)|1:35:25
+Word Problems on Maxima and Minima|1:48:56
+~Application of Derivatives (Part - 01)|1:47:36
+~Application of Derivatives (Part - 02)|0:39:34
+#Integrals
+Introduction Of Integrals|1:29:04
+Integration by substitution method|1:18:12
+Substitution Method (Part - 02)|1:47:40
+Integration Using Trigonometric Identities|1:40:24
+Integrals Of Some Particular Functions|1:23:44
+Integration By Partial Fraction|1:24:16
+Integration By Partial Fraction (Part - 02)|1:48:08
+Integration By Parts|1:44:28
+Special Integration|1:35:36
+Integration Of Some Special Functions|1:24:28
+Definite Integration|1:34:00
+Definite Integration · Properties of Definite Integration|1:34:20
+Properties of Definite Integration (Part - 02)|1:18:36
+Questions Based on Properties|1:37:52
+Most Important Questions|1:58:52
+#Application of Integration
+Area Under The Curve|1:37:16
+Questions|1:50:52
+#Differential Equations
+Order And Degree Of Differential Equations|1:25:40
+@P
+#Electric Charges and Fields
+Introduction To Class XII Physics · Electric Charges and its Properties|1:25:02
+Methods of Charging|1:49:16
+Vector Form of Coulomb's Law · Superposition Principle|1:43:08
+Electric Field · Electric Field Lines|1:52:12
+Electric Field Lines · Superposition Principle|1:44:12
+Dipole - Axial and Equatorial Positions|1:49:16
+Permittivity · Continuous Charge Distribution|1:48:12
+Continuous Charge Distribution · Electric Flux|1:21:52
+Gauss Law and its Applications|1:59:36
+Practice Session|1:57:20
+~Electric Charges and Fields (Part - 01)|2:42:06
+~Electric Charges and Fields (Part - 02)|2:20:30
+#Electrostatic Potential and Capacitance
+Electrostatic Potential Energy|1:19:08
+Electrostatic Potential Energy (Part 2)|1:29:16
+Potential Difference · Relation B/w Field & Potential|1:31:48
+Equipotential Surface · Electric Dipole in Terms of Energy and Potential|0:49:26
+Electric Dipole in Terms of Energy and Potential|1:32:04
+Conductors|1:23:04
+Capacitance|1:28:48
+Capacitance (Part - 02) · Energy in a Capacitor|1:08:08
+Series and Parallel Combination|1:20:36
+Dielectrics|1:59:24
+Dielectrics in Capacitors|1:22:28
+Practice Session|1:00:13
+~Electrostatic Potential and Capacitance (Part - 01)|3:07:39
+~Electrostatic Potential and Capacitance (Part - 02)|2:02:06
+#Current Electricity
+Electric Current|1:07:24
+Ohm's Law · Factors Affecting Resistance|1:29:16
+Questions on Change in Resistance|1:01:16
+Drift Velocity · Resistance and Resistivity · Temperature Dependence Graphs|1:19:52
+Resistance and Resistivity · Temperature Dependence Graphs|1:12:16
+Current Density · Limitations of Ohm's Law · Combination of Resistors|1:21:28
+Kirchoff's Laws|1:38:40
+Emf of A Cell · Combination of Cells|1:32:44
+Energy and Power|1:19:40
+Derivations|0:32:17
+=NCERT Punch : Current Electricity (One Shot)|2:05:36
+#Moving Charges and Magnetism
+Introduction to Electromagnetism · Biot Savart Law|1:24:20
+Applications of BSL · Loop|1:23:04
+Ampere's Circuital Law|1:33:24
+Motion of A Charge in Magnetic Field|1:39:48
+Force On Current Carrying Conductor In Magnetic Field|1:49:44
+Magnetic Dipole Moment · Torque On A Coil|1:28:48
+Torque On A Coil · Moving Coil Galvanometer · Conversion of Galvanometer|1:22:36
+Practice Session|1:15:32
+~Moving Charges and Magnetism (Part - 01)|3:58:36
+~Moving Charges and Magnetism (Part - 02)|1:03:52
+#Magnetism and Matter
+Magnetic Field Due To A Bar Magnet · Dipole In Uniform Magnetic Field|1:12:44
+Magnetic Materials|1:13:41
+Temperature Dependence · Practice Session|0:52:44
+~Magnetism and Matter (Part - 01)|1:50:41
+~Magnetism and Matter (Part - 02)|1:36:25
+#Electromagnetic Induction
+Magnetic Flux · Faraday's Laws|1:21:08
+Lenz Law · Motional EMF|1:01:56
+Self Inductance · Rotational EMF|1:32:56
+Mutual Inductance · AC Generator · Practice Session (PYQs)|1:27:00
+Practice Session|1:00:51
+~Electromagnetic Induction (Part - 01)|2:16:30
+~Electromagnetic Induction (Part - 02)|1:10:40
+#Alternating Current
+Basics of Alternating Current|1:06:56
+Average and RMS Value of AC|1:01:56
+R,C,L Connected to AC Source|1:30:32
+Series LCR Circuit · Inductor Connected to A.C.|1:38:44
+Resonance in LCR Circuit · Transformer|1:59:24
+~Alternating Current (Part - 01)|2:41:18
+~Alternating Current (Part - 02)|0:25:07
+#Electromagnetic Waves
+=Electromagnetic Waves : One Shot|2:01:00
+=Alternating Current and Electromagnetic Waves : Practice Session|0:57:04
+#Ray Optics and Optical Instruments
+Laws of Reflection · Plane Mirror|1:25:24
+Spherical Mirrors|0:58:12
+Important Derivations Related To Mirrors|1:17:00
+Refraction of Light · Refractive Index|1:01:24
+Total Internal Reflection and Prism|1:36:48
+Dispersion · Lenses|1:42:12
+Lens Maker's Formula · Refraction Through Lenses|1:37:04
+Optical Instruments|1:40:52
+Practice Session|1:03:23
+#Wave Optics
+Concept of Wavefront and Huygens Principle|1:54:08
+Interference of Waves and YDSE|1:46:00
+Diffraction · YDSE|1:16:06
+#Dual Nature of Radiation and Matter
+Photon Theory · Photoelectric Effect|1:35:36
+Einstein's Equation · Matter Waves|1:52:40
+@C
+#Solutions
+Solutions & Its types|1:32:35
+Concentration Terms (Part - 01)|1:28:37
+Concentration Terms (Part - 02)|1:37:36
+Numerical Practice|1:36:28
+Solubility Of Solids And Gases In Liquids|1:42:19
+Solubility of Gas in Liquid - Henry's Law and Question Practice|1:33:52
+Question Practice|1:44:56
+Raoult's Law · Ideal and Non - Ideal Solutions|1:36:56
+Ideal and Non - Ideal Solutions|1:47:24
+Colligative Properties - Introduction And Relative Lowering Of Vapour Pressure|1:33:40
+Elevation Of Boiling Point|1:29:52
+Depression Of Freezing Point|1:42:08
+Osmotic Pressure And Van'T Hoff Factor|1:41:56
+Abnormal Molar Mass|1:23:28
+Practice Session and Azeotropes|1:40:08
+~Solutions (Part - 01)|1:52:25
+~Solutions (Part - 02)|1:41:47
+#Electrochemistry
+Introduction And Redox Reactions|1:43:56
+Galvanic Cell|1:32:08
+Electrode Potential And Electrochemical Series|1:45:28
+Electrochemical Series and Nernst Equation|1:41:52
+Nernst Equation and Electrolysis|1:30:08
+Conductance In Electrolytic Solutions|1:36:02
+Practice Questions and Electrolysis|1:29:40
+Conductance (Part - 01)|1:27:36
+Doubts Session|0:40:16
+Conductance (Part - 02)|1:29:05
+Molar Conductance and Equivalent Conductance|1:39:16
+Limiting Molar Conductivity and Kohlrausch's Law|1:37:20
+Kohlrausch's Law and Battery|1:41:36
+Battery and Question Practice|1:35:12
+~Electrochemistry (Part - 01)|3:47:59
+~Electrochemistry (Part - 02)|0:46:58
+#Chemical Kinetics
+Introduction|1:23:44
+Rate Of Reaction And Rate Law|1:19:44
+Order And Molecularity Of Reaction|1:09:20
+Integrated Rate Equation - First Order|1:29:12
+Integrated Rate Equation - Zero Order and First Order|1:30:40
+Integrated Rate Equation - Second Order · Pseudo First Order And Nth Order|1:39:52
+Temperature Dependence Of Rate Of Reaction - Part I|1:29:00
+Temperature Dependence Of Rate Of Reaction - Part II|1:29:53
+~Chemical Kinetics (Part - 01)|2:13:01
+~Chemical Kinetics (Part - 02)|1:36:07
+#Haloalkanes and Haloarenes
+Fundamental Of Organic Chemistry (Quick Recap Of Class 11th)|1:39:32
+Basics of Class 11th (Part - 02) · Introduction|1:23:12
+IUPAC Nomenclature · Classification|1:38:40
+Classification (Part - 02) · Common Names · Nature of C-X bond|1:40:20
+MOP of Haloalkanes (Part - 01)|1:24:16
+MOP of Haloalkanes (Part - 02)|1:16:12
+^Hybridisation · Bonds · IUPAC|1:10:44
+MOP of Haloalkanes (Part - 03) · Physical Properties|1:17:58
+MOP of Haloarenes and Physical Properties|1:38:48
+Chemical Properties - Haloalkanes (Part - 01)|1:37:36
+Chemical Properties - Haloalkanes (Part - 02)|1:28:32
+Questions · Chemical Properties Of Haloarene and Polyhalogen Compounds|1:19:12
+^Extra Practice Questions|0:40:52
+Haloarenes Properties · Polyhalogen Compounds · Practice Session|1:24:04
+~Haloalkanes & Haloarenes (Part - 01)|3:50:14
+~Haloalkanes & Haloarenes (Part - 02)|2:46:03
+#Alcohol, Phenol and Ethers
+Introduction · Classification · IUPAC Nomenclature|1:37:12
+Naming · Method Of Preparation Of Alcohol (Part - 01)|1:24:00
+Method Of Preparation Of Alcohol (Part - 02)|1:09:44
+MOP of Phenol · Physical Properties|1:24:52
+Preparation of Phenol and Ethers|1:20:08
+^Extra Practice Sessions|0:41:46
+Properties of Alcohol|1:33:52
+^Conversion Questions|0:25:59
+Properties of Alcohol (Part - 02) · Properties of Phenol (Part - 01)|1:04:55
+Chemical Properties of Phenol and Ether · Conversion Questions|1:12:20
+~Alcohol, Phenol & Ethers (Part - 01)|4:51:13
+~Alcohol, Phenol & Ethers (Part - 02)|2:36:12
+#Aldehydes, Ketones and Carboxylic Acids
+Introduction · Nomenclature · MOP of Only Aldehyde|1:23:48
+MOP of Both Aldehydes And Ketones and Only Aldehydes (Part - 01)|1:20:08
+MOP of Only Ketones and Only Aldehydes · Physical Properties|0:47:52
+Physical Properties and Chemical Properties (Part - 01)|1:15:20
+Chemical Properties (Part - 02)|0:55:20
+Chemical Properties (Part - 03)|1:07:40
+Chemical Properties (Part - 04)|1:28:24
+Carboxylic Acid|1:12:48
+Carboxylic Acid (Part - 02) · Question Practice and NCERT Discussion|1:21:16
+#Amines
+Introduction to Amines · Classification · Structure|1:15:32
+MOP of Amines and Physical Properties|1:22:52
+Chemical Properties of Amines|1:19:48
+^Haloalkanes and Haloarenes Question Practice|0:30:15
+Diazonium Salt and Question|1:18:56
+#Biomolecules
+Introduction · Classification of Carbohydrates|1:20:08
+Glucose|1:13:32
+^Haloalkanes and Haloarenes Question Practice (Part - 02)|0:34:45
+Glucose Structure · Fructose · Disaccharides|1:10:04
+Protein · Vitamins · Nucleic acid|1:43:36
+#d & f - Block Elements
+Introduction and Basics of Periodic Table|0:50:52
+Quantum Number · Electronic Configuration|1:15:48
+@E
+#English
+=Flamingo 01 : The Last Lesson (Part - 01)|1:20:25
+=Flamingo 02 : The Last Lesson (Part - 02)|1:33:24
+=Flamingo 03 : My Mother At Sixty Six|1:15:36
+=Vistas 01 : The Third Level (Part - 01)|1:13:19
+=Vistas 02 : The Third Level (Part - 02)|1:22:32
+=Writing Skills 01 : Notice Writing|0:30:18
+=Vistas 03 : The Tiger King (Part - 01)|1:32:04
+=Vistas 04 : The Tiger King (Part - 02)|1:26:28
+=Flamingo 04 : Lost Spring I - Sometimes I Find A Rupee In The Garbage|1:37:44
+=Flamingo 05 : Lost Spring II - I Want To Drive A Car|1:22:48
+=Flamingo 06 : Keeping Quiet|1:33:12
+=Vistas 05 : Journey To The End of The Earth (Part - 01)|1:14:56
+=Vistas 06 : Journey To The End of The Earth (Part - 02)|1:33:12
+=Writing Skills 02 : Letter Writing - Letter to Editor|1:35:10
+=Flamingo 07 : Deep Water (Part - 01)|1:19:56
+=Flamingo 08 : Deep Water (Part - 02)|1:22:52
+=Flamingo 09 : A Thing Of Beauty|1:13:28
+=Vistas 07 : The Enemy (Part - 01)|1:31:48
+=Vistas 08 : The Enemy (Part - 02)|1:28:00
+=Vistas 09 : The Enemy (Part - 03)|1:28:24
+=Vistas 10 : The Enemy (Part - 04)|1:32:44
+=Section A 01 : Reading Comprehension|1:28:28
+=Writing Skills 03 : Report Writing|0:47:39
+=Flamingo 10 : The Rattrap (Part - 01)|1:38:04
+=Flamingo 11 : The Rattrap (Part - 02)|1:21:36
+=Flamingo 12 : A Roadside Stand|1:22:21
+=Vistas 11 : On The Face of it (Part - 01)|1:32:44
+=Vistas 12 : On The Face of it (Part - 02)|1:30:56
+=Flamingo 13 : Indigo (Part - 01)|1:24:40
+=Flamingo 14 : Indigo (Part - 02)|1:24:52
+=Vistas 13 : Memories of Childhood - The Cutting of My Long Hair|1:15:04
+=Vistas 14 : Memories of Childhood - We Too are Human Beings|1:15:24
+=Writing Skills 04 : Article Writing|0:46:04
