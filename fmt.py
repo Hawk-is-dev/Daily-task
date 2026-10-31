@@ -44,9 +44,10 @@ def _lec_block(lid, st, mark):
 
 # ---------- message 1: today's plan ----------
 def plan_text(st, now):
-    k, n = core.day_index(st, now.date())
+    k = core.day_index(st, now.date())
+    fin = core.projected_finish(st, now.date()).strftime('%d %b')
     plan, pend = st["plan"], set(core.pending_ids(st))
-    out = [f"{hd(chr(0x1F4CB) + ' Today' + chr(39) + 's Plan')}\n{sb(f'day {k} of {n} · {core.days_left(now.date())} days left')}"]
+    out = [f"{hd(chr(0x1F4CB) + ' Today' + chr(39) + 's Plan')}\n{sb(f'day {k} · target finish {fin}')}"]
     prev = st["history"].get((now.date() - core.timedelta(days=1)).isoformat())
     if prev:
         pl, dn = sum(prev["planned"].values()), sum(prev["done"].values())
@@ -124,6 +125,32 @@ def chapter_text(st, chapter, nxt, subj):
     return t
 
 
+# ---------- extra lectures ----------
+def extra_text(st):
+    head = hd("➕ Extra Lectures") + "\n" + sb("bonus lectures ahead of schedule. tomorrow's plan stays exactly the same.")
+    rows = [head]
+    for c, nm, em in SUBJECTS:
+        l = core.next_fresh(st, c)
+        if l:
+            rows.append(f"{em} {sb(l.name)}\n      ⏱ {sb(fdur(l.dur))}")
+    return "\n\n".join(rows)
+
+
+def extra_kb(st):
+    rows = []
+    for c, _, em in SUBJECTS:
+        l = core.next_fresh(st, c)
+        if l:
+            rows.append([InlineKeyboardButton(f"☐ {em} {l.short} · {fdur(l.dur)}"[:60], callback_data=f"x:{l.id}")])
+    return InlineKeyboardMarkup(rows)
+
+
+def extra_done_text(st, lid):
+    l = LEC[lid]
+    return (hd("➕ Extra Lecture Done") + f"\n{SEMOJI[l.subj]} {sb(l.name)}\n⏱ {sb(fdur(l.dur))}\n\n"
+            + sb("great! tomorrow's plan is unchanged."))
+
+
 # ---------- other commands ----------
 def pending_text(st):
     ids = core.pending_ids(st)
@@ -153,7 +180,7 @@ def countdown_text(st, now):
     d, h = left.days, left.seconds // 3600
     tot = len(core.LECS)
     done = core.total_done(st)
-    out = [f"{hd('⏳ Countdown')}\n{sb(f'{d} days {h} hours left until 31 dec')}",
+    out = [f"{hd('⏳ Countdown')}\n{sb(f'{d} days {h} hours left until 31 dec')}\n{sb('projected finish: ' + core.projected_finish(st, now.date()).strftime('%d %b %Y'))}",
            f"{bar(done / tot, 12)} {sb(f'{done / tot * 100:.1f}% syllabus done')}\n{sb(f'{done}/{tot} lectures')}"]
     for c, nm, em in SUBJECTS:
         t = len(core.BY_SUBJ[c])
@@ -162,7 +189,7 @@ def countdown_text(st, now):
     secs_left = sum(l.dur for l in core.LECS if l.id not in st["done"])
     out.append(sb(f"hours of lectures left: {fdur(secs_left)}"))
     b = core.pace(st, now)
-    status = "on track ✅" if b <= 1 else (f"a bit behind ⚠️ ({b:.0f} lectures)" if b <= 6 else f"far behind 🚨 ({b:.0f} lectures)")
+    status = (f"ahead 🚀 ({-b:.0f} lectures)" if b <= -1 else "on track ✅" if b <= 1 else (f"a bit behind ⚠️ ({b:.0f} lectures)" if b <= 6 else f"far behind 🚨 ({b:.0f} lectures)"))
     out.append(sb(f"status: {status}"))
     return "\n\n".join([out[0], out[1], "\n".join(out[2:6]), "\n".join(out[6:])])
 
@@ -192,12 +219,12 @@ def lock_text(st, now):
         if core.is_complete(st) and st.get("day"):
             return f"{hd('🔓 Unlocked')}\n\n{sb('today' + chr(39) + 's task is complete. groups are free until 12:00 am.')}"
         fu = core.parse(st["free_until"]) if st.get("free_until") else None
-        return f"{hd('🔓 Unlocked')}\n\n{sb(f'free chatting until {tm(fu)}' if fu else 'bot not started yet.')}"
+        return f"{hd('🔓 Unlocked')}\n\n{sb(f'free chatting until {tm(fu)}' if fu else 'lock starts at 12:00 am on ' + core.START_DATE.strftime('%d %b') + '. groups are free until then.')}"
     nxt = next((i for i in st["plan"] if i not in st["done"]), None)
     return f"{hd('🔒 Locked')}\n\n{sb('group messages are deleted until you tick the next lecture.')}\n{sb('next: ' + LEC[nxt].short + ' (' + fdur(LEC[nxt].dur) + ')') if nxt else ''}"
 
 
 HELP = (f"{hd('📖 Commands')}\n\n"
         "/today — tick your lectures\n/plan — today's detailed plan\n/pending — pending lectures\n"
-        "/progress — today's progress\n/countdown — days left &amp; syllabus %\n/chart — charts (week, month, maths…)\n"
+        "/extra — bonus lectures\n/progress — today's progress\n/countdown — days left &amp; syllabus %\n/chart — charts (week, month, maths…)\n"
         "/week — weekly report\n/streak — current streak\n/lockstatus — chat lock status\n/help — this menu")

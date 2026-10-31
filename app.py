@@ -3,7 +3,7 @@ import logging
 import os
 import threading
 import time as _time
-from datetime import time as dtime, timedelta
+from datetime import datetime, time as dtime, timedelta
 
 from flask import Flask
 from telegram import BotCommand, MenuButtonCommands, Update
@@ -24,7 +24,7 @@ _last_notice = 0.0
 
 COMMANDS = [
     ("today", "Tick your lectures"), ("plan", "Today's detailed plan"), ("pending", "Pending lectures"),
-    ("progress", "Today's progress"), ("countdown", "Days left & syllabus %"),
+    ("extra", "Bonus lectures (extra)"), ("progress", "Today's progress"), ("countdown", "Days left & syllabus %"),
     ("chart", "Charts: /chart week, /chart maths"), ("week", "Weekly report"),
     ("streak", "Current streak"), ("lockstatus", "Chat lock status"), ("help", "All commands"),
 ]
@@ -127,19 +127,33 @@ async def need_start(update):
         return True
 
 
+def preview_now():
+    return datetime.combine(core.START_DATE, dtime(0, 5), core.IST)
+
+
+PREVIEW_NOTE = fmt.sb("preview · real tasks start at 12:00 am on 01 nov") + "\n\n"
+
+
 @owner_only
 async def cmd_today(update, ctx):
-    if await need_start(update):
+    if not ST.get("day"):
+        now = preview_now()
+        await update.message.reply_text(
+            PREVIEW_NOTE.replace("real tasks start", "tick buttons arrive") + fmt.plan_text(core.preview_state(now), now), parse_mode=HTML)
         return
     await update.message.reply_text(fmt.checklist_text(ST), parse_mode=HTML, reply_markup=fmt.checklist_kb(ST))
 
 
-def simple(render):
+def simple(render, preview=False):
+    """render(state, now) -> html. With preview=True, shows a Day-1 preview until the bot has started."""
     @owner_only
     async def h(update, ctx):
-        if await need_start(update):
-            return
-        await update.message.reply_text(render(), parse_mode=HTML)
+        if preview and not ST.get("day"):
+            now = preview_now()
+            st, note = core.preview_state(now), PREVIEW_NOTE
+        else:
+            now, st, note = core.now_ist(), ST, ""
+        await update.message.reply_text(note + render(st, now), parse_mode=HTML)
     return h
 
 
@@ -149,7 +163,7 @@ async def cmd_help(update, ctx):
 
 
 async def cmd_chart(update, ctx):
-    if update.effective_user.id != ST.get("owner") or await need_start(update):
+    if update.effective_user.id != ST.get("owner"):
         return
     subj, last = None, None
     for a in (x.lower() for x in ctx.args):
@@ -162,9 +176,57 @@ async def cmd_chart(update, ctx):
             last = 30
     buf = await asyncio.to_thread(charts.make_chart, ST, subj, last)
     if buf is None:
-        await update.message.reply_text(fmt.sb("no data yet."), parse_mode=HTML)
+        await update.message.reply_text(fmt.sb("charts appear after day 1 begins (12:00 am on 01 nov)."), parse_mode=HTML)
         return
     await update.message.reply_photo(buf, caption=fmt.sb("green candle = day complete · red = fell short"), parse_mode=HTML)
+
+
+# ---------------- extra ----------------
+@owner_only
+async def cmd_extra(update, ctx):
+    if await need_start(update):
+        return
+    if not core.is_complete(ST):
+        await update.message.reply_text(fmt.sb("finish today's task first. extra lectures unlock after that."), parse_mode=HTML)
+        return
+    if not any(core.next_fresh(ST, c) for c, _, _ in core.SUBJECTS):
+        await update.message.reply_text(fmt.sb("no extra lectures left."), parse_mode=HTML)
+        return
+    await update.message.reply_text(fmt.extra_text(ST), parse_mode=HTML, reply_markup=fmt.extra_kb(ST))
+
+
+async def on_extra(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    q = update.callback_query
+    if q.from_user.id != ST.get("owner"):
+        await q.answer()
+        return
+    lid = q.data.split(":", 1)[1]
+    ch = None
+    async with LOCK:
+        res = core.try_extra(ST, lid, core.now_ist())
+        if res["ok"]:
+            ch = core.chapter_finished(ST, lid)
+            await save()
+    if not res["ok"]:
+        why = res["why"]
+        if why == "too_soon":
+            await q.answer(fmt.reject_text(res), show_alert=True)
+        elif why == "plan_first":
+            await q.answer("Finish today's task first.", show_alert=True)
+        else:
+            await q.answer("Not available. Use /extra again.", show_alert=True)
+        return
+    await q.answer("Done ✅")
+    try:
+        if any(core.next_fresh(ST, c) for c, _, _ in core.SUBJECTS):
+            await q.edit_message_text(fmt.extra_text(ST), parse_mode=HTML, reply_markup=fmt.extra_kb(ST))
+        else:
+            await q.edit_message_text(fmt.sb("no extra lectures left."), parse_mode=HTML)
+    except BadRequest:
+        pass
+    await say(ctx.bot, fmt.extra_done_text(ST, lid))
+    if ch:
+        await say(ctx.bot, fmt.chapter_text(ST, ch[0], ch[1], core.LEC[lid].subj))
 
 
 # ---------------- tick ----------------
@@ -278,14 +340,16 @@ def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).post_init(post_init).post_shutdown(post_shutdown).build()
     app.add_handler(CommandHandler("start", cmd_start))
     app.add_handler(CommandHandler("today", cmd_today))
-    app.add_handler(CommandHandler("plan", simple(lambda: fmt.plan_text(ST, core.now_ist()))))
-    app.add_handler(CommandHandler("pending", simple(lambda: fmt.pending_text(ST))))
-    app.add_handler(CommandHandler("progress", simple(lambda: fmt.progress_text(ST, core.now_ist()))))
-    app.add_handler(CommandHandler("countdown", simple(lambda: fmt.countdown_text(ST, core.now_ist()))))
-    app.add_handler(CommandHandler("week", simple(lambda: fmt.week_text(ST, core.now_ist()))))
-    app.add_handler(CommandHandler("streak", simple(lambda: f"{fmt.hd('🔥 Streak')}\n\n{fmt.sb(f'{core.streak(ST)} days in a row')}")))
-    app.add_handler(CommandHandler("lockstatus", simple(lambda: fmt.lock_text(ST, core.now_ist()))))
+    app.add_handler(CommandHandler("extra", cmd_extra))
+    app.add_handler(CommandHandler("plan", simple(lambda s, n: fmt.plan_text(s, n), preview=True)))
+    app.add_handler(CommandHandler("pending", simple(lambda s, n: fmt.pending_text(s))))
+    app.add_handler(CommandHandler("progress", simple(lambda s, n: fmt.progress_text(s, n), preview=True)))
+    app.add_handler(CommandHandler("countdown", simple(lambda s, n: fmt.countdown_text(s, n), preview=True)))
+    app.add_handler(CommandHandler("week", simple(lambda s, n: fmt.week_text(s, n))))
+    app.add_handler(CommandHandler("streak", simple(lambda s, n: f"{fmt.hd('🔥 Streak')}\n\n{fmt.sb(f'{core.streak(s)} days in a row')}")))
+    app.add_handler(CommandHandler("lockstatus", simple(lambda s, n: fmt.lock_text(s, n))))
     app.add_handler(CommandHandler("help", cmd_help))
     app.add_handler(CommandHandler("chart", cmd_chart))
     app.add_handler(CallbackQueryHandler(on_tick, pattern=r"^t:"))
+    app.add_handler(CallbackQueryHandler(on_extra, pattern=r"^x:"))
     app.run_polling(allowed_updates=Update.ALL_TYPES)

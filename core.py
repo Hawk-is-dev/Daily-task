@@ -13,6 +13,7 @@ LOCK_ENABLED = os.getenv("LOCK_ENABLED", "1") != "0"
 SUBJECTS = [("M", "Maths", "📘"), ("P", "Physics", "⚡"), ("C", "Chemistry", "🧪"), ("E", "English", "📖")]
 SNAME = {c: n for c, n, _ in SUBJECTS}
 SEMOJI = {c: e for c, _, e in SUBJECTS}
+PER_DAY = {"M": 2, "P": 2, "C": 2, "E": 1}  # fixed new lectures per day (Plan B)
 PREDONE = ["E001"]  # English Lec 1 already finished before the bot
 
 
@@ -107,11 +108,14 @@ def remaining_counts(st):
 
 
 def build_plan(st, today):
-    dl, plan = days_left(today), []
+    """Fixed daily target (PER_DAY) of new lectures + ALL pending lectures (planned earlier, not done).
+    Extra lectures never change how many new lectures arrive tomorrow; they only finish the syllabus sooner."""
+    plan = []
     for c, _, _ in SUBJECTS:
         rem = remaining(st, c)
-        n = math.ceil(len(rem) / dl) if rem else 0
-        plan += [l.id for l in rem[:n]]
+        pend = [l for l in rem if l.id in st["assigned"]]
+        fresh = [l for l in rem if l.id not in st["assigned"]]
+        plan += [l.id for l in pend] + [l.id for l in fresh[:PER_DAY[c]]]
     return plan
 
 
@@ -156,6 +160,19 @@ def rollover(st, now):
     return True
 
 
+def preview_state(now):
+    """Throw-away state (never saved) used to show what Day 1 will look like before the bot starts."""
+    st = new_state()
+    for i in PREDONE:
+        st["done"][i] = iso(now)
+    st["start"] = now.date().isoformat()
+    st["start_remaining"] = remaining_counts(st)
+    st["day"] = st["start"]
+    st["plan"] = build_plan(st, now.date())
+    st["open"] = remaining_counts(st)
+    return st
+
+
 def pending_ids(st):
     return [i for i in st["plan"] if i not in st["done"] and st["assigned"].get(i, st["day"]) < st["day"]]
 
@@ -172,12 +189,7 @@ def locked(st, now):
     return not (fu and now < parse(fu))
 
 
-def try_tick(st, lid, now):
-    if lid not in st["plan"]:
-        return {"ok": False, "why": "not_in_plan"}
-    if lid in st["done"]:
-        return {"ok": False, "why": "already"}
-    lec = LEC[lid]
+def _too_soon(st, lec, now):
     lt = st.get("last_tick")
     if lt:
         lt = parse(lt)
@@ -185,6 +197,18 @@ def try_tick(st, lid, now):
             earliest = lt + timedelta(minutes=FREE_MIN, seconds=lec.dur)
             if now < earliest:
                 return {"ok": False, "why": "too_soon", "earliest": earliest, "since": now - lt, "lec": lec}
+    return None
+
+
+def try_tick(st, lid, now):
+    if lid not in st["plan"]:
+        return {"ok": False, "why": "not_in_plan"}
+    if lid in st["done"]:
+        return {"ok": False, "why": "already"}
+    lec = LEC[lid]
+    bad = _too_soon(st, lec, now)
+    if bad:
+        return bad
     st["done"][lid] = iso(now)
     st["last_tick"] = iso(now)
     if is_complete(st):
@@ -194,6 +218,27 @@ def try_tick(st, lid, now):
         base = max(now, parse(fu)) if fu else now
         st["free_until"] = iso(base + timedelta(minutes=FREE_MIN))
     return {"ok": True, "complete": is_complete(st), "lec": lec}
+
+
+def next_fresh(st, subj):
+    """Next lecture of a subject that is neither done nor planned yet."""
+    return next((l for l in BY_SUBJ[subj] if l.id not in st["done"] and l.id not in st["assigned"]), None)
+
+
+def try_extra(st, lid, now):
+    """Extra lecture beyond the plan: only after today's task is complete. Never changes future counts."""
+    if not st.get("day") or not is_complete(st):
+        return {"ok": False, "why": "plan_first"}
+    lec = LEC.get(lid)
+    nxt = next_fresh(st, lec.subj) if lec else None
+    if not nxt or nxt.id != lid:
+        return {"ok": False, "why": "not_next"}
+    bad = _too_soon(st, lec, now)
+    if bad:
+        return bad
+    st["done"][lid] = iso(now)
+    st["last_tick"] = iso(now)
+    return {"ok": True, "lec": lec}
 
 
 # ---------- chapters ----------
@@ -230,18 +275,22 @@ def streak(st):
 
 
 def day_index(st, today):
-    start = date.fromisoformat(st["start"])
-    return (today - start).days + 1, (END_DATE - start).days + 1
+    return (today - date.fromisoformat(st["start"])).days + 1
 
 
 def pace(st, now):
-    """Lectures behind (+) / ahead (-) of the straight-line schedule."""
-    start = datetime.combine(date.fromisoformat(st["start"]), time(0), IST)
-    end = datetime.combine(END_DATE + timedelta(days=1), time(0), IST)
-    frac = min(1.0, max(0.0, (now - start) / (end - start)))
-    s0 = sum(st["start_remaining"].values())
-    done_since = s0 - sum(remaining_counts(st).values())
-    return s0 * frac - done_since
+    """Lectures behind (+) / ahead (-) of the fixed schedule, counted up to the end of yesterday."""
+    start = date.fromisoformat(st["start"])
+    days = max(0, (now.date() - start).days)
+    expected = sum(min(st["start_remaining"][c], PER_DAY[c] * days) for c in PER_DAY)
+    done_since = sum(st["start_remaining"].values()) - sum(remaining_counts(st).values())
+    return expected - done_since
+
+
+def projected_finish(st, today):
+    """Date the syllabus ends if you keep doing the daily target."""
+    d = max(math.ceil(len(remaining(st, c)) / PER_DAY[c]) for c in PER_DAY)
+    return today + timedelta(days=max(d - 1, 0))
 
 
 def fdur(sec):

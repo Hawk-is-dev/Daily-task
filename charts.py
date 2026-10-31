@@ -34,9 +34,7 @@ def make_chart(st, subj=None, last=None):
     if not rows:
         return None
     codes = [subj] if subj else [c for c, _, _ in core.SUBJECTS]
-    s0 = sum(st["start_remaining"][c] for c in codes)
     start = date.fromisoformat(st["start"])
-    n = (core.END_DATE - start).days + 1
     fig, (a1, a2) = plt.subplots(2, 1, figsize=(9, 6), gridspec_kw={"height_ratios": [3, 1]}, sharex=True)
     fig.patch.set_facecolor(BG)
     for a in (a1, a2):
@@ -52,7 +50,7 @@ def make_chart(st, subj=None, last=None):
         a1.bar(x, max(o - c, 0.15), bottom=min(c, o) if o != c else c - 0.075, width=0.6, color=col)
         a2.bar(x, dn, width=0.6, color=col)
         a2.plot([x - 0.3, x + 0.3], [pl, pl], color=TXT, linewidth=1, linestyle=":")
-    ideal = [s0 * (core.END_DATE - r[0]).days / n for r in rows]
+    ideal = [sum(max(0, st["start_remaining"][c] - core.PER_DAY[c] * ((r[0] - start).days + 1)) for c in codes) for r in rows]
     a1.plot(xs, ideal, color="#f5a623", linestyle="--", linewidth=1.2, label="ideal pace")
     a1.plot(xs, [r[2] for r in rows], color="#4fc3f7", linewidth=1, label="remaining")
     a1.legend(facecolor=BG, edgecolor=GRID, labelcolor=TXT, fontsize=8)
